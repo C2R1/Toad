@@ -1,0 +1,9 @@
+ford mustang shelby GT500 : (mettre au 1/8e)
+  - roues :
+    - 40cm >> 5cm (diametre)
+    - 
+  - taille :
+    - 2,70m >> 33.75cm (empattement)
+    - 4,76m >> 59.5cm (longueur)
+    - 1,82m >> 22.75cm (largeur)
+    - 1,28m >> 16cm (hauteur)
