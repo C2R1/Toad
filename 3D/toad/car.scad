@@ -2,6 +2,7 @@ use <wheel.scad>
 use <direction.scad>
 use <parts.scad>
 use <chassis.scad>
+use <spring.scad>
 
 $fn=100;
 
