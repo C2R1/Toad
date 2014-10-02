@@ -159,16 +159,6 @@ module chassisBackRight()
     }
 }
 
-module chassisBackSuspension()
-{
-    
-}
-
-module shockAbsorber()
-{
-    spring(r1 = 9.1, r2 = 0.7, h = 34.9, hr = 2);
-}
-
 module chassisFrontLeft()
 {
     mirror([1,0,0])

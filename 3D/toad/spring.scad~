@@ -1,6 +1,5 @@
-module spring(r = 100, r2 = 10, h = 100, twists)
+module spring(r1 = 100, r2 = 10, h = 100, twists)
 {
-    r1 = r - r2;
     hr = h / (twists * 2);
 	stepsize = 1/16;
 	module segment(i1, i2) {
