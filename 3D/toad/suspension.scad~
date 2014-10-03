@@ -1,4 +1,6 @@
 use <spring.scad>
+use <wheel.scad>
+
 
 $fn=200;
 
@@ -51,7 +53,8 @@ module shock()
                     cylinder(r=3.8, h=2);
                 }
             }
-            
+            translate([0,0,-10])
+            cylinder(r=2,h=32);
         }
     }
 }
