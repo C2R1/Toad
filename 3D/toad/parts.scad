@@ -31,25 +31,39 @@ module vibrationAttenuation()
 
 module servoMoteurPivot()
 {
-    w=8.89;
-    l=34;
-
-    difference()
-    {
-        cylinder(r=8.87/2, h=4.39);
-        translate([0,0,-1]) cylinder(r=5.39/2, h=6);
-    }
-    translate([0,0,4.39])
+    w1=8.89;
+    w2=4.78;
+    l=33.88;
+    color("lightgrey")
     {
         difference()
         {
-            union()
+            cylinder(r=8.87/2, h=4.39);
+            translate([0,0,-1]) cylinder(r=5.39/2, h=6);
+        }
+        translate([0,0,4.39])
+        {
+            difference()
             {
-                translate([-l/2,-w/2,0]) cube([l,w,2]);
-                translate([0,0,2]) cylinder(r=7.57/2, h=0.70);
+                union()
+                {
+                    difference()
+                    {
+                        translate([-l/2,-w1/2,0])cube([l,w1,2]);
+                        translate([0,w1/2,-1]) rotate([0,0,-10]) cube([20,10,4]);
+                        translate([0,w1/2,-1]) rotate([0,0,100]) cube([10,20,4]);
+                        translate([0,-w1/2,-1]) rotate([0,0,170]) cube([20,10,4]);
+                        translate([0,-w1/2,-1]) rotate([0,0,280]) cube([10,20,4]);
+                    }
+                    translate([0,0,2]) cylinder(r=7.57/2, h=0.70);
+                }
+                translate([0,0,2.70-1.33]) cylinder(r=5.98/2, h=2.33);
+                translate([0,0,-1]) cylinder(r=2.76/2, h=3);
+                for(j=[-1,1])
+                    for(i=[0,1,2])
+                        for(x=[j*(l/2-1.9-1.3/2-i*(1.03+1.3))])
+                            translate([x,0,-1]) cylinder(r=1.3/2, h=4);
             }
-            translate([0,0,2.70-1.33]) cylinder(r=5.98/2, h=2.33);
-            translate([0,0,-1]) cylinder(r=2.76/2, h=3);
         }
     }
 }
@@ -109,6 +123,7 @@ module servoMotor(screwGuides = false)
             cylinder(r=9.42, h=2.36);
             translate([0,0,2.36]) cylinder(r=6.47,h=2.22);
             translate([0,0,4.58]) color("lightgrey") cylinder(r=5.73/2, h=3.5);
+            translate([0,0,4.58]) servoMoteurPivot();
         }
         translate([0,(19.8-17.82)/2,0])
         {
@@ -263,5 +278,4 @@ module raspberryPi()
 	cube([27.8,19,5]);
 }
 
-servoMoteurPivot();
-//servoMotor(screwGuides=true);
+servoMotor(screwGuides=true);
