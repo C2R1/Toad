@@ -39,14 +39,17 @@ module servoMoteurPivot()
         cylinder(r=8.87/2, h=4.39);
         translate([0,0,-1]) cylinder(r=5.39/2, h=6);
     }
-    translate([-l/2,-w/2,4.39])
+    translate([0,0,4.39])
     {
         difference()
         {
             union()
             {
-                cube([l,w,2]);
+                translate([-l/2,-w/2,0]) cube([l,w,2]);
+                translate([0,0,2]) cylinder(r=7.57/2, h=0.70);
             }
+            translate([0,0,2.70-1.33]) cylinder(r=5.98/2, h=2.33);
+            translate([0,0,-1]) cylinder(r=2.76/2, h=3);
         }
     }
 }
