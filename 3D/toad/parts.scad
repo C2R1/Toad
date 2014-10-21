@@ -1,28 +1,117 @@
-$fn=100;
+$fn=200;
 
-module servoMotor(screwGuides = false)
+module screwGuide()
 {
-    cube([40.7,19.8,33.6]);
-    translate([-6.5,0.4,26.6])
+    color("gold")
     difference()
     {
         union()
         {
-            cube([53.36,19,2.35]);
-            translate([0,9.19,2.35])
-            difference()
+            cylinder(r=1.52, h=5.77);
+            translate([0,0,5.37]) cylinder(r=2.5, h=0.4);
+        }
+        translate([0,0,-1]) cylinder(r=1.22, h=7);
+    }    
+}
+
+module vibrationAttenuation()
+{
+    color("grey")
+    difference()
+    {
+        union()
+        {
+            cylinder(r=2.02, h=5.7);
+            for(z=[0,4])
+                translate([-3.275,-4.46,z]) cube([6.55,8.92,1.7]);
+        }
+        translate([0,0,-1]) cylinder(r=1.515,h=7);
+    }
+}
+
+module servoMoteurPivot()
+{
+    w=8.89;
+    l=34;
+
+    difference()
+    {
+        cylinder(r=8.87/2, h=4.39);
+        translate([0,0,-1]) cylinder(r=5.39/2, h=6);
+    }
+    translate([-l/2,-w/2,4.39])
+    {
+        difference()
+        {
+            union()
             {
-                cube([53.36,1,1.5]);
-                rotate([0,-35,0])
-                translate([-1,-1,0])
-                cube([10,3,10]);
-                translate([53.36,0,0])
-                rotate([0,35,0])
-                translate([-9,-1,0])
-                cube([10,3,10]);
+                cube([l,w,2]);
             }
         }
-        
+    }
+}
+
+module servoMotor(screwGuides = false)
+{
+    d=4.36;
+    xC=4.76-(d/2);
+    yC=(d/2)+2.36;
+    X=[xC,53.36-xC];
+    Y=[yC,19-yC];
+    w=2.66;
+    
+    cube([40.7,19.8,33.6]);
+    translate([-6.5,0.4,26.6])
+    {
+        difference()
+        {
+            union()
+            {
+                cube([53.36,19,2.35]);
+                translate([0,9.19,2.35])
+                difference()
+                {
+                    cube([53.36,1,1.5]);
+                    rotate([0,-35,0])
+                    translate([-1,-1,0])
+                    cube([10,3,10]);
+                    translate([53.36,0,0])
+                    rotate([0,35,0])
+                    translate([-9,-1,0])
+                    cube([10,3,10]);
+                }
+            }
+            for(x=X)
+                for(y=[yC,19-yC])
+                    translate([x,y,-1]) cylinder(r=d/2, h=4);
+            for(x=[-2,51])
+                for(y=Y-[w/2,w/2])
+                    translate([x,y,-1]) cube([4,w,4]);
+        }
+        if(screwGuides)
+        for(x=X)
+            for(y=Y)
+            {
+                translate([x,y+0.1,-1.65]) 
+                {
+                    vibrationAttenuation();
+                    translate([0,0,0.4]) screwGuide();
+                }
+            }
+    }
+    translate([0,0,33.6])
+    {
+        translate([0.6+9.42,9.42+(19.8-18.84)/2,0])
+        {
+            cylinder(r=9.42, h=2.36);
+            translate([0,0,2.36]) cylinder(r=6.47,h=2.22);
+            translate([0,0,4.58]) color("lightgrey") cylinder(r=5.73/2, h=3.5);
+        }
+        translate([0,(19.8-17.82)/2,0])
+        {
+            translate([40.7-23.5-5.97,0,0]) cube([23.5,17.82,2.36]);
+            translate([40.7-17.82/2-3.70,17.82/2,0]) cylinder(r=17.82/2, h=2.36);
+        }
     }
 }
 
@@ -171,4 +260,5 @@ module raspberryPi()
 	cube([27.8,19,5]);
 }
 
-servoMotor();
+servoMoteurPivot();
+//servoMotor(screwGuides=true);
