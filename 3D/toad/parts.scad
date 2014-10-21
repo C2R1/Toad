@@ -68,7 +68,7 @@ module servoMoteurPivot()
     }
 }
 
-module servoMotor(screwGuides = false)
+module servoMotor(screwGuides = false, angle = 0)
 {
     d=4.36;
     xC=4.76-(d/2);
@@ -123,7 +123,7 @@ module servoMotor(screwGuides = false)
             cylinder(r=9.42, h=2.36);
             translate([0,0,2.36]) cylinder(r=6.47,h=2.22);
             translate([0,0,4.58]) color("lightgrey") cylinder(r=5.73/2, h=3.5);
-            translate([0,0,4.58]) servoMoteurPivot();
+            translate([0,0,4.58]) rotate([0,0,angle]) servoMoteurPivot();
         }
         translate([0,(19.8-17.82)/2,0])
         {
@@ -278,4 +278,4 @@ module raspberryPi()
 	cube([27.8,19,5]);
 }
 
-servoMotor(screwGuides=true);
+servoMotor(screwGuides=true, angle=0);
