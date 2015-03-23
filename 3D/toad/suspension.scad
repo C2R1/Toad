@@ -61,7 +61,7 @@ module strut()
     a = 20;
     d1 = 3;
     //McPherson Strut
-    translate([0,0,20])
+    translate([0,-50,20])
     shock(compression = 10*$t);
     translate([0,0,0])
     triangle(_x=x,_y=y,_z=z,_a=a,_d1=d1);
