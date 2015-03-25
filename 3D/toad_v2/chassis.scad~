@@ -1,0 +1,6 @@
+module chassis()
+{
+    cube([10,480,10]);
+}
+
+chassis();
