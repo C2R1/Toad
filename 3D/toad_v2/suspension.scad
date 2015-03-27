@@ -1,6 +1,7 @@
 use <parts.scad>
+use <utils.scad>
 
-$fn=200;
+$fn=500;
 
 module frontSuspension(print = false)
 {
@@ -13,7 +14,7 @@ module frontSuspension(print = false)
     frontSuspensionLowerArm();
     translate([0,-5,20])
     frontSuspensionUpperArm();
-    translate([0,0,0])
+    translate([20,0,2])
     frontSuspensionPivot();
   }
 }
@@ -77,18 +78,70 @@ module frontSuspensionUpperArm()
 
 module frontSuspensionPivot(print=false)
 {
-  l=30;
-  w=30;
-  h=3;
+  l=25; //
+  w=30; // base plate
+  h=3;  //
   
-  offsetX = -10;
-  offsetY = -w/2;
-  offsetZ = 0;
+  offsetX = 10; //
+  offsetY = 0;  // offset to the base rotation point
+  offsetZ = 0;  //
   
-//  translate([offsetX,offsetY,offsetZ])
+  l1=7;   //
+  w1=w;   // upper part
+  h1=17;  //
+  
+  rc=2; //the radius of the screws (holes in the base plate)
+  
+  translate([0,0,-4])
+  cylinder(r=2,h=4);
+  translate([offsetX,offsetY,offsetZ])
   {
     translate([-l,-w/2,0])
-      cube([l,w,h]);
+    {
+      difference()
+      {
+        union()
+        {
+          difference()
+          {
+            cube([l,w,h]);
+            translate([0,w,-1]) rotate([0,0,90])
+              quarterCircle(r=10,h=h+2,invert=true,expand=true);
+            translate([0,0,-1]) rotate([0,0,-180])
+              quarterCircle(r=10,h=h+2,invert=true,expand=true);
+            translate([12,6,-1])
+            {
+              cylinder(r=rc,h=h+2);
+              translate([0,18,0])
+              cylinder(r=rc,h=h+2);
+            }
+          }
+          translate([l-l1,0,h])
+          difference()
+          {
+              union()
+              {
+                cube([l1,w1,h1]);
+                translate([0,0,0])
+                rotate([0,0,0])
+                *cylinder(r=2,h=20);
+              }
+              translate([-1,0,h1]) rotate([180,-90,0])
+                quarterCircle(r=5,h=l1+2,invert=true,expand=true);
+              translate([l1+1,w,h1]) rotate([0,-90,0])
+                quarterCircle(r=5,h=l1+2,invert=true,expand=true);
+              translate([-1,7,-1])
+                cube([l1+2,16,13]);
+              translate([l1,w1+1,h1]) rotate([90,0,0])
+                quarterCircle(r=5,h=w1+2,invert=true,expand=true);
+          }
+        }
+        translate([l,0,-1]) rotate([0,0,-90])
+            quarterCircle(r=5,h=h+h1+2,invert=true,expand=true);
+        translate([l,w,-1]) rotate([0,0,0])
+            quarterCircle(r=5,h=h+h1+2,invert=true,expand=true);
+      }
+    }
     
     if(!print)
       translate([-13,0,h])
@@ -97,4 +150,4 @@ module frontSuspensionPivot(print=false)
   }
 }
 
-frontSuspensionPivot(print=false);
+frontSuspension(print=false);
